@@ -1,0 +1,38 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            Criar Nova Role
+        </h2>
+    </x-slot>
+
+    <div class="py-10">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-6 shadow sm:rounded-lg">
+                <form method="POST" action="{{ route('roles.store') }}">
+                    @csrf
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Nome da Role</label>
+                        <input type="text" name="name" value="{{ old('name') }}" class="w-full mt-1 rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Permissões</label>
+                        <select name="permissions[]" multiple class="w-full rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            @foreach($permissions as $permission)
+                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                            @endforeach
+                        </select>
+                        <small class="text-gray-500">Segure Ctrl (Windows) ou Command (Mac) para selecionar múltiplos.</small>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <a href="{{ route('roles.index') }}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">Cancelar</a>
+                        <button type="submit" class="ml-3 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
